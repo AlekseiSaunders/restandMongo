@@ -11,7 +11,7 @@ app.use(methodOverride('_method'));
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
-const comments = [
+let comments = [
   {
     id: uuidv4(),
     username: 'Todd',
@@ -35,23 +35,23 @@ const comments = [
 ];
 
 app.get('/comments', (req, res, next) => {
-  res.render('comments/index', { comments });
+  res.render('./comments/index', { comments });
 });
 
 app.get('/comments/new', (req, res, next) => {
-  res.render('comments/new');
+  res.render('./comments/new');
 });
 
 app.post('/comments', (req, res, next) => {
   const { username, comment } = req.body;
   comments.push({ username, comment, id: uuidv4() });
-  res.redirect('comments');
+  res.redirect('./comments');
 });
 
 app.get('/comments/:id', (req, res, next) => {
   const { id } = req.params;
   const comment = comments.find((c) => c.id === id);
-  res.render('comments/show', { comment });
+  res.render('./comments/show', { comment });
 });
 
 app.patch('/comments/:id', (req, res, next) => {
@@ -70,12 +70,14 @@ app.patch('/comments/:id', (req, res, next) => {
 app.get('/comments/:id/edit', (req, res, next) => {
   const { id } = req.params;
   const comment = comments.find((c) => c.id === id);
-  res.render('comments/edit', { comment });
+  res.render('./comments/edit', { comment });
 });
 
 app.delete('/comments/:id', (req, res, next) => {
-  
-})
+  const { id } = req.params;
+  comments = comments.filter((c) => c.id !== id);
+  res.redirect('/comments');
+});
 
 /* taco code below 
 app.get('/tacos', (req, res, next) => {

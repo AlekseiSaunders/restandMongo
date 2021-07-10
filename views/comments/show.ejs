@@ -9,14 +9,18 @@
 </head>
 
 <body>
-    <h1>Comment id: <%= comment.id %>
+    <h1>Comment id: <%=comment.id%>
     </h1>
     <h2>
         <%= comment.comment %> - <%=comment.username%>
     </h2>
     <a href="/comments">Back to index</a>
     <br>
-    <a href="/comments/<%= comment.id%>/edit">Edit this comment</a>
+    <a href="/comments/<%=comment.id%>/edit">Edit this comment</a>
+    <br>
+    <form method="POST" action="/comments/<%=comment.id%>?_method=DELETE">
+        <button>Delete Comment</button>
+    </form>
 </body>
 
 </html>
